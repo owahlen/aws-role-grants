@@ -27,6 +27,7 @@ class RDSClient:
             databases.append({
                 'DBInstanceIdentifier': db['DBInstanceIdentifier'],
                 'DBInstanceArn': db_arn,
+                'DBResourceID': db['DbiResourceId'],
                 'Tags': tags
             })
 
