@@ -24,7 +24,8 @@ def evaluate(databases, job_roles, iam_client):
             if allowed_actions:
                 log.debug("Allowed actions of role on database: '{}'".format(allowed_actions))
                 results.append({
-                    'db_identifier': db_identifier,
+                    'service': 'rds',
+                    'resource': db_identifier,
                     'role': role_name,
                     'allowed_actions': ', '.join(allowed_actions)
                 })

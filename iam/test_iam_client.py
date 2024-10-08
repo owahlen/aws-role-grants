@@ -14,29 +14,29 @@ class TestIAMClient(unittest.TestCase):
         ### SETUP ###
 
         # Create a mock IAM client
-        iam_client = boto3.client('iam', region_name='us-east-1')
+        client = boto3.client('iam', region_name='us-east-1')
 
         # Create mock roles
-        iam_client.create_role(
+        client.create_role(
             RoleName='test-role-1',
             AssumeRolePolicyDocument='{}'
         )
-        iam_client.create_role(
+        client.create_role(
             RoleName='job-role-2',
             AssumeRolePolicyDocument='{}'
         )
-        iam_client.create_role(
+        client.create_role(
             RoleName='test-role-3',
             AssumeRolePolicyDocument='{}'
         )
 
         # Initialize the IAMClient class
-        my_iam_client = IAMClient()
+        iam_client = IAMClient()
 
         ### WHEN ###
 
         # Test get_roles with a prefix that matches "job-role"
-        roles_with_prefix = my_iam_client.get_roles(prefix='job-')
+        roles_with_prefix = iam_client.get_roles(prefix='job-')
 
         ### THEN ###
 
@@ -49,29 +49,29 @@ class TestIAMClient(unittest.TestCase):
         ### SETUP ###
 
         # Create a mock IAM client
-        iam_client = boto3.client('iam', region_name='us-east-1')
+        client = boto3.client('iam', region_name='us-east-1')
 
         # Create mock roles
-        iam_client.create_role(
+        client.create_role(
             RoleName='test-role-1',
             AssumeRolePolicyDocument='{}'
         )
-        iam_client.create_role(
+        client.create_role(
             RoleName='job-role-2',
             AssumeRolePolicyDocument='{}'
         )
-        iam_client.create_role(
+        client.create_role(
             RoleName='test-role-3',
             AssumeRolePolicyDocument='{}'
         )
 
         # Initialize the IAMClient class
-        my_iam_client = IAMClient()
+        iam_client = IAMClient()
 
         ### WHEN ###
 
         # Test get_roles without any prefix
-        all_roles = my_iam_client.get_roles()
+        all_roles = iam_client.get_roles()
 
         ### THEN ###
 
@@ -83,12 +83,12 @@ class TestIAMClient(unittest.TestCase):
         ### SETUP ###
 
         # Initialize the IAMClient class without creating any roles
-        my_iam_client = IAMClient()
+        iam_client = IAMClient()
 
         ### WHEN ###
 
         # Test get_roles with no roles created
-        roles = my_iam_client.get_roles()
+        roles = iam_client.get_roles()
 
         ### THEN ###
 
@@ -108,12 +108,12 @@ class TestIAMClient(unittest.TestCase):
         }
 
         # Initialize the IAMClient class
-        my_iam_client = IAMClient()
+        iam_client = IAMClient()
 
         ### WHEN ###
 
         # Test check_role_permissions with allowed actions
-        allowed_actions = my_iam_client.check_role_permissions(
+        allowed_actions = iam_client.check_role_permissions(
             role_arn='arn:aws:iam::123456789012:role/test-role',
             actions=['rds:DescribeDBInstances', 'rds:StartDBInstance', 'rds:StopDBInstance', 'rds:DeleteDBInstance'],
             resource_arn='arn:aws:rds:us-east-1:123456789012:db:test-db'

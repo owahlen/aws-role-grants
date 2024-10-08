@@ -1,18 +1,18 @@
 import logging
 
-from evaluation import database_roles
+from evaluation import database_roles, bucket_roles
 from logger.log import log
 
 import pandas as pd
 
 from iam.iam_client import IAMClient
 from rds.rds_client import RDSClient
-
+from s3.s3_client import S3Client
 
 
 def display_results(results):
     """Convert results to a pandas DataFrame and print the table."""
-    df = pd.DataFrame(results, columns=['db_identifier', 'role', 'allowed_actions'])
+    df = pd.DataFrame(results, columns=['service', 'resource', 'role', 'allowed_actions'])
     if df.empty:
         print("No roles with permissions found on the RDS databases.")
     else:
@@ -27,18 +27,21 @@ def display_results(results):
 def main():
     log.setLevel(level=logging.INFO)
 
-    # Step 1: Initialize the RDS and IAM clients
-    rds_client = RDSClient()
+    # Initialize the AWS clients
     iam_client = IAMClient()
+    rds_client = RDSClient()
+    s3_client = S3Client()
 
-    # Step 2: Retrieve all RDS databases and job roles
+    # Retrieve all AWS resources and job roles
     databases = rds_client.get_rds_databases()
+    buckets = s3_client.get_s3_buckets()
     job_roles = iam_client.get_roles(prefix='job-role')
 
-    # Step 3: Check if any roles have permissions on these databases
+    # Check if any roles has permissions on the resources
     results = database_roles.evaluate(databases, job_roles, iam_client)
+    results.extend(bucket_roles.evaluate(buckets, job_roles, iam_client))
 
-    # Step 4: Convert results to a pandas DataFrame and print the table
+    # Convert results to a pandas DataFrame and print the table
     display_results(results)
 
 

@@ -35,12 +35,12 @@ class TestRDSClient(unittest.TestCase):
         )
 
         # Initialize the RDSClient
-        client = RDSClient()
+        rds_client = RDSClient()
 
         ### WHEN ###
 
         # Call the method
-        databases = client.get_rds_databases()
+        databases = rds_client.get_rds_databases()
 
         ### THEN ###
 
