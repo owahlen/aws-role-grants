@@ -24,7 +24,8 @@ def evaluate(buckets, job_roles, iam_client):
                     'service': 's3',
                     'resource': bucket_name,
                     'role': role_name,
-                    'allowed_actions': ', '.join(allowed_actions)
+                    'allowed_actions': ', '.join(allowed_actions),
+                    'description': bucket_arn
                 })
 
     return results

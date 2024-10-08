@@ -27,7 +27,8 @@ def evaluate(databases, job_roles, iam_client):
                     'service': 'rds',
                     'resource': db_identifier,
                     'role': role_name,
-                    'allowed_actions': ', '.join(allowed_actions)
+                    'allowed_actions': ', '.join(allowed_actions),
+                    'description': db_instance_arn
                 })
 
     return results

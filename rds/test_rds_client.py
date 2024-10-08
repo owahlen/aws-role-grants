@@ -15,7 +15,7 @@ class TestRDSClient(unittest.TestCase):
         # Initialize a boto3 RDS client within the mock context
         client = boto3.client('rds')
 
-        # Create a mocked RDS instance
+        # Create a fake RDS instance
         create_db_response = client.create_db_instance(
             DBInstanceIdentifier='test-db',
             MasterUsername='admin',

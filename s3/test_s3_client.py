@@ -12,10 +12,10 @@ class TestS3Client(unittest.TestCase):
     def test_get_s3_buckets(self):
         ### SETUP ###
 
-        # Initialize a boto3 RDS client within the mock context
+        # Initialize a boto3 S3 client within the mock context
         client = boto3.client('s3')
 
-        # Create a mocked RDS instance
+        # Create fake S3 buckets
         client.create_bucket(Bucket='test-bucket-1', CreateBucketConfiguration={'LocationConstraint': 'eu-central-1'})
         client.create_bucket(Bucket='test-bucket-2', CreateBucketConfiguration={'LocationConstraint': 'eu-central-1'})
 
